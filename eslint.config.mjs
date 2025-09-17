@@ -11,6 +11,5 @@ export default withNuxt({
     'prettier/prettier': ['error'], // 使用 Prettier 檢查格式
     'no-console': 'warn', // 使用 console 只警告
     'vue/multi-word-component-names': 'off',
-    'linebreak-style': ['error', 'unix'], // 強制 LF
   },
 });

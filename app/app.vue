@@ -1,11 +1,12 @@
 <template>
   <div>
-    <NuxtPage />
+    <!-- <Welcome /> -->
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
     <!-- <NuxtRouteAnnouncer />
     <NuxtWelcome /> -->
   </div>
 </template>
 
-<script setup>
-// const test = '123';
-</script>
+<script setup></script>

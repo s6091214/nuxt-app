@@ -1,11 +1,10 @@
 <template>
-  <div>{{ '套用自訂模板' }}</div>
+  <div>{{ '不套用布局模板' }}</div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'custom',
-  middleware: 'random-redirect',
+  layout: false,
 });
 </script>
 

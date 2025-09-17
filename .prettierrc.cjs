@@ -8,5 +8,4 @@ module.exports = {
   tabWidth: 2, // tab 寬度 2 空格
   trailingComma: 'es5', // ES5 支援的地方加尾逗號
   arrowParens: 'always', // 箭頭函式參數一定加括號
-  endOfLine: 'lf',
 };
