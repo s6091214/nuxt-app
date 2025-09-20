@@ -31,12 +31,11 @@ const handleGoogleLogin = async () => {
   const authCode = await googleAuthCodeLogin({
     clientId: GOOGLE_CLIENT_ID,
   }).then((response) => response?.code);
+  console.log(authCode, runtimeConfig);
   if (!authCode) {
     // 登入失敗
     return;
   }
-
-  console.log(runtimeConfig);
 
   const { data } = await useFetch('/api/auth/google-auth-code', {
     method: 'POST',

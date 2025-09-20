@@ -13,33 +13,29 @@ export default defineEventHandler(async (event) => {
     redirectUri: GOOGLE_REDIRECT_URI,
   });
 
-  try {
-    const { tokens } = await oauth2Client.getToken(body.authCode);
+  const { tokens } = await oauth2Client.getToken(body.authCode);
 
-    oauth2Client.setCredentials({ access_token: tokens.access_token });
+  oauth2Client.setCredentials({ access_token: tokens.access_token });
 
-    const userInfo = await oauth2Client
-      .request({
-        url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-      })
-      .then((response) => response.data)
-      .catch(() => null);
+  const userInfo = await oauth2Client
+    .request({
+      url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+    })
+    .then((response) => response.data)
+    .catch(() => null);
 
-    if (!userInfo) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Invalid token',
-      });
-    }
-
-    return {
-      id: userInfo.sub,
-      name: userInfo.name,
-      avatar: userInfo.picture,
-      email: userInfo.email,
-      emailVerified: userInfo.email_verified,
-    };
-  } catch (error) {
-    console.error('Failed to get token:', error.response?.data || error);
+  if (!userInfo) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid token',
+    });
   }
+
+  return {
+    id: userInfo.sub,
+    name: userInfo.name,
+    avatar: userInfo.picture,
+    email: userInfo.email,
+    emailVerified: userInfo.email_verified,
+  };
 });
