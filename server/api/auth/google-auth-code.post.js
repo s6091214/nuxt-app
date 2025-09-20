@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
   const oauth2Client = new OAuth2Client({
     clientId: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    redirectUri: 'http://localhost:3000',
   });
 
   const { tokens } = await oauth2Client.getToken(body.authCode);
