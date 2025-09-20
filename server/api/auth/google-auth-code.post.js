@@ -24,12 +24,13 @@ export default defineEventHandler(async (event) => {
     .then((response) => response.data)
     .catch(() => null);
 
-  await oauth2Client.revokeCredentials();
-
   if (!userInfo) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid token',
+      oauth2Client: oauth2Client,
+      tokens: tokens,
+      userInfo: userInfo,
     });
   }
 
