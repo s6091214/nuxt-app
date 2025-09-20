@@ -27,6 +27,10 @@ const { googleClientId: GOOGLE_CLIENT_ID } = runtimeConfig.public;
 
 const userInfo = ref(null);
 
+onMounted(() => {
+  useFetch('/api/auth/google-redirect-uri');
+});
+
 const handleGoogleLogin = async () => {
   const authCode = await googleAuthCodeLogin({
     clientId: GOOGLE_CLIENT_ID,
