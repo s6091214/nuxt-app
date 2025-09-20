@@ -1,7 +1,9 @@
 <template>
   <div>
+    <!-- <img src="/bg.jpg" alt="bg" class="m-auto h-auto" />
+    <img src="~assets/test.jpg" alt="bg" class="m-auto h-auto" /> -->
     <h1 class="flex p-4 text-3xl font-bold">{{ '首页' }}</h1>
-    <div class="flex flex-col p-4">
+    <div class="inline-flex flex-col p-4">
       <NuxtLink v-for="link in links" :key="link.to" class="text-blue-500 underline" :to="link.to"
         >{{ link.label }}
       </NuxtLink>
@@ -32,8 +34,14 @@ const links = [
   { to: '/locale', label: 'Go to Locale' },
   { to: '/piniaCounter', label: 'Go to Pinia Counter' },
   { to: '/show', label: 'Go to Show Double Count' },
+  { to: '/runtimeConfig', label: 'Go to RuntimeConfig' },
+  { to: '/config', label: 'Go to Config' },
+  { to: '/login', label: 'Go to Login' },
+  { to: '/login/googleCredential', label: 'Go to Google Credential Login' },
+  { to: '/login/googleAuthCode', label: 'Go to Google Auth Code Login' },
+  { to: '/login/googleAuthToken', label: 'Go to Google Auth Token Login' },
+  { to: '/i18nPage', label: 'Go to i18n Page' },
 ];
-
 definePageMeta({
   middleware: 'auth',
 });
