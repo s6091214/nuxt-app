@@ -12,30 +12,30 @@ export default defineEventHandler(async (event) => {
     clientSecret: GOOGLE_CLIENT_SECRET,
     redirectUri: GOOGLE_REDIRECT_URI,
   });
+  console.log('GOOGLE_REDIRECT_URI', GOOGLE_REDIRECT_URI);
+  const { tokens } = await oauth2Client.getToken(body.authCode);
 
-  try {
-    const { tokens } = await oauth2Client.getToken(body.authCode);
-    oauth2Client.setCredentials({ access_token: tokens.access_token });
+  oauth2Client.setCredentials({ access_token: tokens.access_token });
 
-    const userInfo = await oauth2Client
-      .request({
-        url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-      })
-      .then((res) => res.data);
+  const userInfo = await oauth2Client
+    .request({
+      url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+    })
+    .then((response) => response.data)
+    .catch(() => null);
 
-    return {
-      id: userInfo.sub,
-      name: userInfo.name,
-      avatar: userInfo.picture,
-      email: userInfo.email,
-      emailVerified: userInfo.email_verified,
-    };
-  } catch (err) {
-    console.error('OAuth Error:', err.response?.data || err.message);
+  if (!userInfo) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Token exchange failed',
-      message: err.message,
+      statusMessage: 'Invalid token',
     });
   }
+
+  return {
+    id: userInfo.sub,
+    name: userInfo.name,
+    avatar: userInfo.picture,
+    email: userInfo.email,
+    emailVerified: userInfo.email_verified,
+  };
 });
