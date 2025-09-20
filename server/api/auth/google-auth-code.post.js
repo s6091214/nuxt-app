@@ -28,9 +28,6 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid token',
-      oauth2Client: oauth2Client,
-      tokens: tokens,
-      userInfo: userInfo,
     });
   }
 
