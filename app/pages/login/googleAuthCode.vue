@@ -27,8 +27,13 @@ const { googleClientId: GOOGLE_CLIENT_ID } = runtimeConfig.public;
 
 const userInfo = ref(null);
 
-onMounted(() => {
-  useFetch('/api/auth/google-redirect-uri');
+onMounted(async () => {
+  const { data, error } = await useFetch('/api/auth/google-redirect-uri');
+  if (error.value) {
+    console.error('Fetch error:', error.value);
+  } else {
+    console.log('Redirect URI:', data.value.redirectUri);
+  }
 });
 
 const handleGoogleLogin = async () => {
