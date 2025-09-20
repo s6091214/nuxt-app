@@ -31,7 +31,6 @@ const handleGoogleLogin = async () => {
   const authCode = await googleAuthCodeLogin({
     clientId: GOOGLE_CLIENT_ID,
   }).then((response) => response?.code);
-
   if (!authCode) {
     console.log('No auth code received', authCode);
     return;

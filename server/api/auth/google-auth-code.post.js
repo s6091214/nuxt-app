@@ -13,29 +13,29 @@ export default defineEventHandler(async (event) => {
     redirectUri: GOOGLE_REDIRECT_URI,
   });
 
-  const { tokens } = await oauth2Client.getToken(body.authCode);
+  try {
+    const { tokens } = await oauth2Client.getToken(body.authCode);
+    oauth2Client.setCredentials({ access_token: tokens.access_token });
 
-  oauth2Client.setCredentials({ access_token: tokens.access_token });
+    const userInfo = await oauth2Client
+      .request({
+        url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+      })
+      .then((res) => res.data);
 
-  const userInfo = await oauth2Client
-    .request({
-      url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-    })
-    .then((response) => response.data)
-    .catch(() => null);
-
-  if (!userInfo) {
+    return {
+      id: userInfo.sub,
+      name: userInfo.name,
+      avatar: userInfo.picture,
+      email: userInfo.email,
+      emailVerified: userInfo.email_verified,
+    };
+  } catch (err) {
+    console.error('OAuth Error:', err.response?.data || err.message);
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid token',
+      statusMessage: 'Token exchange failed',
+      message: err.message,
     });
   }
-
-  return {
-    id: userInfo.sub,
-    name: userInfo.name,
-    avatar: userInfo.picture,
-    email: userInfo.email,
-    emailVerified: userInfo.email_verified,
-  };
 });
