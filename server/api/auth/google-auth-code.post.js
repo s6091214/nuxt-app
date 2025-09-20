@@ -2,13 +2,15 @@ import { OAuth2Client } from 'google-auth-library';
 
 const runtimeConfig = useRuntimeConfig();
 const { googleClientId: GOOGLE_CLIENT_ID } = runtimeConfig.public;
-const { googleClientSecret: GOOGLE_CLIENT_SECRET } = runtimeConfig;
+const { googleClientSecret: GOOGLE_CLIENT_SECRET, googleRedirectUri: GOOGLE_REDIRECT_URI } =
+  runtimeConfig;
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const oauth2Client = new OAuth2Client({
     clientId: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
+    redirectUri: GOOGLE_REDIRECT_URI,
   });
 
   const { tokens } = await oauth2Client.getToken(body.authCode);

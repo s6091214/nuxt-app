@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: '123',
     googleClientSecret: '這邊放上你的 Google Client Secret',
+    googleRedirectUri: 'http://localhost:3000',
     public: {
       apiBase: '/api',
       googleClientId: '這邊放上你的 Google Client ID',
